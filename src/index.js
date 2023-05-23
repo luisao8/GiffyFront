@@ -11,7 +11,11 @@ root.render(
     <Auth0Provider
     domain="dev-sb6ntunibpcdilyy.eu.auth0.com"
     clientId="EZ3f7hhZOx9xxkTjKFdcCpGfbADnWB3i"
-    redirectUri={window.location.origin}
+    authorizationParams={{
+      redirect_uri: window.location.origin,
+      audience: "https://dev-sb6ntunibpcdilyy.eu.auth0.com/api/v2/",
+      scope: "openid profile email"
+    }}
   >
     <App />
   </Auth0Provider>

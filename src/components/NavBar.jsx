@@ -3,6 +3,7 @@ import 'tailwindcss/tailwind.css';
 import logo from "../multimedia/Logo2.png";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
 
 
 
@@ -10,20 +11,40 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function NavBar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { user, isAuthenticated, logout, loginWithRedirect } = useAuth0();
+  const { user, isAuthenticated, logout, loginWithRedirect, getAccessTokenSilently } = useAuth0();
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [userMetadata, setUserMetadata] = useState([]);
 
   const isLoggedOut = async () => {
+
     // If the user is authenticated
     if (isAuthenticated) {
-      console.log(user.token)
+      const domain = "dev-sb6ntunibpcdilyy.eu.auth0.com";
+      
+      
+      const accessToken = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: `https://${domain}/api/v2/`,
+          scope: "read:current_user",
+        },
+      });
+        
+  
+      
+      console.log(accessToken)
+      const userName = user.name;
+      const userEmail = user.email;
       // Call your backend API to logout
       const response = await fetch('http://localhost:5000/users/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`, // Assuming the JWT is stored on the user object
+          Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
         },
+        body: JSON.stringify({
+          user: userName,
+          email: userEmail
+        })
       });
   
       // Check if the logout was successful
@@ -42,7 +63,7 @@ function NavBar() {
       loginWithRedirect();
     }
   };
-  
+
 
   const [showModal, setShowModal] = useState(false);
 
