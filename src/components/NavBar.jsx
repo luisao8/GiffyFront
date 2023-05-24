@@ -3,17 +3,68 @@ import 'tailwindcss/tailwind.css';
 import logo from "../multimedia/Logo2.png";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
+import SearchBar from "./SearchBar";
+import Categories from "./Categories";
 
 
 
   
 
-function NavBar() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+function NavBar({fetchGifs, likedGifs, UploadedGifs}) {
   const { user, isAuthenticated, logout, loginWithRedirect, getAccessTokenSilently } = useAuth0();
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const [userMetadata, setUserMetadata] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+
+
+  const toggleDropdown = () => {
+      setIsDropdownOpen(!isDropdownOpen);
+    };
+
+
+  const handleUpload = async (event) => {
+    event.preventDefault();
+    console.log("hola")
+    if (isAuthenticated) {
+      console.log("hola")
+      const urlLink = event.target.elements.urlLink.value;
+      const description = event.target.elements.description.value;
+      const userEmail = user.email;
+      const userName = user.name;
+      const domain = "dev-sb6ntunibpcdilyy.eu.auth0.com";
+
+      const accessToken = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: `https://${domain}/api/v2/`,
+          scope: "read:current_user",
+        },
+      });
+  
+      const response = await fetch('http://localhost:5000/users/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          urlLink: urlLink,
+          user: userName,
+          email: userEmail,
+          description: description,
+        }),
+      });
+    
+      if (response.ok) {
+        console.log('Gif uploaded successfully');
+        // Clear the input field
+        event.target.elements.urlLink.value = '';
+        event.target.elements.description.value = '';
+      } else {
+        console.log('Failed to upload gif');
+      }}
+  };
 
   const isLoggedOut = async () => {
 
@@ -65,12 +116,9 @@ function NavBar() {
   };
 
 
-  const [showModal, setShowModal] = useState(false);
+  
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
+ 
   
   return (
     <header className="pb-6 bg-white lg:pb-0">
@@ -83,51 +131,19 @@ function NavBar() {
             </a>
           </div>
           <div className="flex-grow mx-10">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-full px-4 py-2 text-base font-medium text-black transition-all duration-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-        />
+        <SearchBar fetchGifs={fetchGifs}/>
        </div>
 
-          <button
-            type="button"
-            className="inline-flex p-2 text-black transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100 hover:bg-gray-100"
-          >
-            {/* Menu open: "hidden", Menu closed: "block" */}
-            <svg
-              className="block w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h16M4 16h16" />
-            </svg>
+          
 
-            {/* Menu open: "block", Menu closed: "hidden" */}
-            <svg
-              className="hidden w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-
-          <div className="hidden lg:flex lg:items-center lg:ml-auto lg:space-x-10">
-            <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> About Us </a>
-
-            <div className="relative">
+       <div className="relative">
               <a
                 href="#"
                 title=""
                 className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
                 onClick={toggleDropdown}
               >
-                Categories
+                Your GIF's
               </a>
               {isDropdownOpen && (
                 <div className="absolute z-10 mt-2 py-2 bg-white border border-gray-200 rounded-md shadow-md">
@@ -135,28 +151,24 @@ function NavBar() {
                     href="#"
                     title=""
                     className="block px-4 py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
+                    onClick={(e) => {e.preventDefault(); UploadedGifs();}}
                   >
-                    Animals
+                    Uploaded
                   </a>
                   <a
                     href="#"
                     title=""
                     className="block px-4 py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
-                  >
-                    Coding
+                    onClick={(e) => {e.preventDefault(); likedGifs();}}>
+                    Liked
                   </a>
-                  <a
-                    href="#"
-                    title=""
-                    className="block px-4 py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
-                  >
-                    Love
-                  </a>
+                  
                 </div>
               )}
-            </div>
+        </div>
 
-           
+          <div className="ml-3">
+            <Categories fetchGifs={fetchGifs}/>
           </div>
 
           {isAuthenticated ? (
@@ -190,29 +202,18 @@ function NavBar() {
                           <div className="p-4">
                             <h2 className="text-lg mb-10">Upload GIF</h2>
                             <button className="float-right" onClick={() => setShowModal(false)}>Close</button>
-                            <form>
-                              <label>
-                                GIF Name:
-                                <input type="text" name="Name" />
-                              </label>
-                              <label>
-                                Description:
-                                <input type="text" name="Description" />
-                              </label>
-                              <p>          </p>
-                              <label for="category">Select a category:</label>
-                              <select id="category" name="category">
-                                <option value="category1">Animals</option>
-                                <option value="category2">Coding</option>
-                                <option value="category3">Love</option>
-                              </select>
-                              
-                              
+                            <form onSubmit={handleUpload}>
                               <label className="ml-5">
-                                Upload:   
-                                <input className="ml-2" type="file" name="file" />
+                                GIF URL:
+                                <input className="ml-2" type="text" name="urlLink" required />
                               </label>
-                              <input type="submit" className="px-4 py-2 mt-10 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"  value="Submit" />
+                              <label className="ml-5">
+                                Description:
+                                <input className="ml-2" type="text" name="description" required />
+                              </label>
+                              <button type="submit" className="px-4 py-2 mt-10 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer">
+                                Submit
+                              </button>
                             </form>
                           </div>
                         </div>
