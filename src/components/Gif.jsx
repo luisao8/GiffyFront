@@ -16,6 +16,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function Gif({ gif }) {
 
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const domain = process.env.DOMAIN;
 
     const shareGif = () => {
         navigator.clipboard.writeText(gif.urlLink).then(() => {
@@ -31,7 +32,7 @@ function Gif({ gif }) {
     const likeGif = async () => {
         console.log(user)
         if (isAuthenticated) {
-            const domain = "dev-sb6ntunibpcdilyy.eu.auth0.com";
+            
                 const gifID = gif._id;
                 const userID = gif.user;
                 const userName = user.name;
@@ -52,12 +53,12 @@ function Gif({ gif }) {
             if (!gif._id) {
                 
                 
-                // Call your backend API to logout
-                const response = await fetch('http://localhost:5000/users/upload', {
+                
+                const response = await fetch(`${REACT_APP_BASE_URL}/users/upload`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
+                    Authorization: `Bearer ${accessToken}`, 
                 },
                 body: JSON.stringify({
                     urlLink: gif.urlLink,
@@ -70,18 +71,18 @@ function Gif({ gif }) {
                 });
                 
             
-                // Check if the logout was successful
+               
                 if (response.ok) {
                 console.log('GIF succesfully UPLOADED.');
 
                 const savedGif = await response.json(); 
                 const gifId = savedGif._id;
 
-                const responseLike = await fetch('http://localhost:5000/users/like', {
+                const responseLike = await fetch(`${REACT_APP_BASE_URL}/users/like`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
+                        Authorization: `Bearer ${accessToken}`, 
                     },
                     body: JSON.stringify({
                         gifID: gifId,
@@ -92,7 +93,7 @@ function Gif({ gif }) {
                     })
                     });
                 
-                    // Check if the logout was successful
+                    
                     if (responseLike.ok) { 
                     console.log('GIF succesfully liked AFTER SAVING IT.');
                     } else {
@@ -105,19 +106,19 @@ function Gif({ gif }) {
                 console.log('Failed to UPLOAD GIF.');
                 }
 
-                 // Call your backend API to logout
+                 
                 
                 } else if (gif._id) { 
 
                 
                 
                 
-                // Call your backend API to logout
-                const response = await fetch('http://localhost:5000/users/like', {
+                
+                const response = await fetch(`${REACT_APP_BASE_URL}/users/like`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
+                    Authorization: `Bearer ${accessToken}`, 
                 },
                 body: JSON.stringify({
                     gifID: gifID,
@@ -128,7 +129,7 @@ function Gif({ gif }) {
                 })
                 });
             
-                // Check if the logout was successful
+                
                 if (response.ok) {
                 console.log('GIF succesfully liked.');
                 } else {

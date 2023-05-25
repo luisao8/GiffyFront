@@ -21,7 +21,7 @@ function App() {
   };
 
   const fetchGifs = async () => {
-    const response = await fetch('http://localhost:5000/gifs/getGifs');
+    const response = await fetch(`${REACT_APP_BASE_URL}/gifs/getGifs`);
     const data = await response.json();
     console.log(data);
     setGifs(data);
@@ -91,7 +91,7 @@ function App() {
         },
       });
 
-      const response = await fetch('http://localhost:5000/users/getLiked', {
+      const response = await fetch(`${REACT_APP_BASE_URL}/users/getLiked`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ function App() {
         },
       });
 
-      const response = await fetch('http://localhost:5000/users/getUploaded', {
+      const response = await fetch(`${REACT_APP_BASE_URL}/users/getUploaded`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
