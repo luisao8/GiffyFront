@@ -37,6 +37,7 @@ function Gif({ gif }) {
                 const userName = user.name;
                 const userEmail = user.email;
                 const description = gif.title;
+                console.log(userName)
                 
                 
                 
@@ -63,6 +64,7 @@ function Gif({ gif }) {
                     user: userName,
                     email: userEmail,
                     description: description,
+                    flag: false,
 
                 })
                 });

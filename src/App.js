@@ -112,11 +112,12 @@ function App() {
     }
   }
 
-
+// HHHHHHHSHSHSHSHSHHSHSHSHSHSHHSHSHSHSHSHSHSHHSHSHSHHSHSHSHSHSHHSHSHS
 
 
   const uploadedGifs = async () => {
-    const email = user.email;
+    const userName = user.name;
+    console.log(userName)
     
     try {
       const accessToken = await getAccessTokenSilently({
@@ -133,7 +134,7 @@ function App() {
           Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
         },
         body: JSON.stringify({
-          email: email,
+          user: userName,
         })
       });
 
@@ -144,6 +145,9 @@ function App() {
       console.log("SERVER ERROR");
     }
   }
+
+
+  // HHHHHHHSHSHSHSHSHHSHSHSHSHSHHSHSHSHSHSHSHSHHSHSHSHHSHSHSHSHSHHSHSHS
 
   return (
     <div className="bg-purple-200 text-black min-h-screen">
