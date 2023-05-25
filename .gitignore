@@ -21,3 +21,19 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+# const logoutUser = async (req, res) => {
+#   const token = req.headers.authorization.split(' ')[1]; // Extract the token from the Bearer
+#   jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+#       if (err) {
+#           // Respond with an error if the token is invalid
+#           res.status(401).json({ error: 'Invalid token' });
+#       } else {
+#           // Now we can access the user's information from the decoded token
+#           console.log(decoded);
+#           res.json({ message: 'Token is valid' });
+#           console.log(`User  has logged out`);
+#       }
+#   });
+# }

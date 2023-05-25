@@ -26,49 +26,115 @@ function Gif({ gif }) {
         });
     }; 
 
+   
+
     const likeGif = async () => {
+        console.log(user)
         if (isAuthenticated) {
             const domain = "dev-sb6ntunibpcdilyy.eu.auth0.com";
-            const gifID = gif._id;
-            const userID = gif.user;
-            const userName = user.name;
-            const userEmail = user.email;
-            console.log(gifID)
-            console.log(userID)
-            
-            
-            const accessToken = await getAccessTokenSilently({
-              authorizationParams: {
-                audience: `https://${domain}/api/v2/`,
-                scope: "read:current_user",
-              },
-            });
-            
-            
-            // Call your backend API to logout
-            const response = await fetch('http://localhost:5000/users/like', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
-              },
-              body: JSON.stringify({
-                gifID: gifID,
-                userID: userID,
-                name: userName,
-                email: userEmail,
+                const gifID = gif._id;
+                const userID = gif.user;
+                const userName = user.name;
+                const userEmail = user.email;
+                const description = gif.title;
+                
+                
+                
+                
+                const accessToken = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: `https://${domain}/api/v2/`,
+                    scope: "read:current_user",
+                },
+                });
 
-              })
-            });
-        
-            // Check if the logout was successful
-            if (response.ok) {
-              console.log('GIF succesfully liked.');
-            } else {
-              console.log('Failed to like GIF.');
+            if (!gif._id) {
+                
+                
+                // Call your backend API to logout
+                const response = await fetch('http://localhost:5000/users/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
+                },
+                body: JSON.stringify({
+                    urlLink: gif.urlLink,
+                    user: userName,
+                    email: userEmail,
+                    description: description,
+
+                })
+                });
+                
+            
+                // Check if the logout was successful
+                if (response.ok) {
+                console.log('GIF succesfully UPLOADED.');
+
+                const savedGif = await response.json(); 
+                const gifId = savedGif._id;
+
+                const responseLike = await fetch('http://localhost:5000/users/like', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
+                    },
+                    body: JSON.stringify({
+                        gifID: gifId,
+                    
+                        
+                        email: userEmail,
+
+                    })
+                    });
+                
+                    // Check if the logout was successful
+                    if (responseLike.ok) { 
+                    console.log('GIF succesfully liked AFTER SAVING IT.');
+                    } else {
+                    console.log('Failed to like GIF AFTER SAVING IT.');
+                    }
+
+
+
+                } else {
+                console.log('Failed to UPLOAD GIF.');
+                }
+
+                 // Call your backend API to logout
+                
+                } else if (gif._id) { 
+
+                
+                
+                
+                // Call your backend API to logout
+                const response = await fetch('http://localhost:5000/users/like', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
+                },
+                body: JSON.stringify({
+                    gifID: gifID,
+                    userID: userID,
+                    name: userName,
+                    email: userEmail,
+
+                })
+                });
+            
+                // Check if the logout was successful
+                if (response.ok) {
+                console.log('GIF succesfully liked.');
+                } else {
+                console.log('Failed to like GIF.');
+                }
             }
-        };
 
+        };
     };
     
     
@@ -79,9 +145,9 @@ function Gif({ gif }) {
             <img className="w-full" src={gif.urlLink} alt={gif.title} />
             <div className="px-6 py-4 flex justify-between items-center">
               <div>
-                <div className="font-bold text-xl mb-2">{gif.uploadedBy}</div>
+                <div className="font-bold text-xl mb-2">{gif.title}{gif.description}</div>
                 <p className="text-gray-700 text-base">
-                  {gif.description}
+                {gif.uploadedBy}
                 </p>
               </div>
               <div>

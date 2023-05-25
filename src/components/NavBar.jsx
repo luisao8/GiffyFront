@@ -11,7 +11,8 @@ import Categories from "./Categories";
 
   
 
-function NavBar({fetchGifs, likedGifs, UploadedGifs}) {
+function NavBar({likedGifs, uploadedGifs, fetchCategories, fetchBar}) {
+
   const { user, isAuthenticated, logout, loginWithRedirect, getAccessTokenSilently } = useAuth0();
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -131,7 +132,7 @@ function NavBar({fetchGifs, likedGifs, UploadedGifs}) {
             </a>
           </div>
           <div className="flex-grow mx-10">
-        <SearchBar fetchGifs={fetchGifs}/>
+        <SearchBar fetchBar={fetchBar}/>
        </div>
 
           
@@ -151,7 +152,7 @@ function NavBar({fetchGifs, likedGifs, UploadedGifs}) {
                     href="#"
                     title=""
                     className="block px-4 py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
-                    onClick={(e) => {e.preventDefault(); UploadedGifs();}}
+                    onClick={(e) => {e.preventDefault(); uploadedGifs();}}
                   >
                     Uploaded
                   </a>
@@ -168,7 +169,7 @@ function NavBar({fetchGifs, likedGifs, UploadedGifs}) {
         </div>
 
           <div className="ml-3">
-            <Categories fetchGifs={fetchGifs}/>
+            <Categories fetchCategories={fetchCategories}/>
           </div>
 
           {isAuthenticated ? (
