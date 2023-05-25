@@ -1,6 +1,7 @@
 import React from "react";
 import 'tailwindcss/tailwind.css';
 import logo from "../multimedia/Logo2.png";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
@@ -8,6 +9,44 @@ import logo from "../multimedia/Logo2.png";
   
 
 function Footer() {
+    const { user, isAuthenticated, logout, loginWithRedirect, getAccessTokenSilently } = useAuth0();
+
+    // const registerUser = async () => {
+        
+
+        
+    //     const email = user.email;
+    //     const name = user.name;
+
+    //     try {
+    //       const accessToken = await getAccessTokenSilently({
+    //         authorizationParams: {
+    //           audience: `https://${process.env.REACT_APP_DOMAIN}/api/v2/`,
+    //           scope: "read:current_user",
+    //         },
+    //       });
+    
+    //       const response = await fetch('http://localhost:5000/users/register', {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //           Authorization: `Bearer ${accessToken}`, 
+    //         },
+    //         body: JSON.stringify({
+    //           name: name,  
+    //           email: email,
+    //         })
+    //       });
+    
+    //       const data = await response.json();
+    //       console.log(data);
+         
+          
+          
+    //     } catch {
+    //       console.log("SERVER ERROR");
+    //     }
+    //   }
   
 
   
@@ -114,7 +153,7 @@ function Footer() {
                         <input type="email" name="email" id="email" placeholder="Enter your email" class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
                     </div>
 
-                    <button type="submit" class="inline-flex items-center justify-center px-6 py-4 mt-3 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700">Subscribe</button>
+                    <button type="submit" class="inline-flex items-center justify-center px-6 py-4 mt-3 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700" >Subscribe</button>
                 </form>
             </div>
         </div>
@@ -128,3 +167,5 @@ function Footer() {
 }
 
 export default Footer;
+
+// onClick={registerUser()}

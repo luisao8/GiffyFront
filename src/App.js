@@ -70,7 +70,6 @@ function App() {
         };
       });
     } 
-  
     fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIPHI_API}&q=${category}&limit=${limit}&offset=0&rating=g&lang=en`)
       .then(response => response.json())
       .then(data => {
@@ -117,7 +116,7 @@ function App() {
 
   const uploadedGifs = async () => {
     const userName = user.name;
-    console.log(userName)
+    
     
     try {
       const accessToken = await getAccessTokenSilently({
@@ -134,15 +133,15 @@ function App() {
           Authorization: `Bearer ${accessToken}`, 
         },
         body: JSON.stringify({
-          user: userName,
+          name: userName,
         })
       });
 
       const data = await response.json();
       console.log(data);
       setGifs(data);
-    } catch {
-      console.log("SERVER ERROR");
+    } catch (error) {
+      console.log("SERVER ERROR", error);
     }
   }
 
