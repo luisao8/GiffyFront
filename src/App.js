@@ -23,6 +23,7 @@ function App() {
   const fetchGifs = async () => {
     const response = await fetch(`${process.env.REACT_APP_BASE_URL}/gifs/getGifs`);
     const data = await response.json();
+    console.log(process.env.REACT_APP_BASE_URL)
     console.log(data);
     setGifs(data);
   };
