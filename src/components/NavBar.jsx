@@ -34,7 +34,7 @@ function NavBar({likedGifs, uploadedGifs, fetchCategories, fetchBar}) {
       const description = event.target.elements.description.value;
       const userEmail = user.email;
       const userName = user.name;
-      const domain = "dev-sb6ntunibpcdilyy.eu.auth0.com";
+      const domain = process.env.REACT_APP_DOMAIN;
 
       const accessToken = await getAccessTokenSilently({
         authorizationParams: {

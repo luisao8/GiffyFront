@@ -9,12 +9,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Auth0Provider
-    domain="dev-sb6ntunibpcdilyy.eu.auth0.com"
-    clientId="EZ3f7hhZOx9xxkTjKFdcCpGfbADnWB3i"
+    domain={process.env.REACT_APP_DOMAIN}
+    clientId={process.env.REACT_APP_AUTH_CLIENT_ID}
     authorizationParams={{
       redirect_uri: window.location.origin,
-      audience: "https://dev-sb6ntunibpcdilyy.eu.auth0.com/api/v2/",
-      scope: "openid profile email"
+      audience: process.env.REACT_APP_AUTH_AUDIENCE,
+      scope: process.env.REACT_APP_AUTH_SCOPE,
     }}
   >
     <App />

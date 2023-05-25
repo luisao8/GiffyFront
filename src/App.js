@@ -1,3 +1,4 @@
+
 import 'tailwindcss/tailwind.css';
 import Footer from './components/Footer';
 import NavBar from './components/NavBar';
@@ -10,9 +11,9 @@ function App() {
 
   const [gifs, setGifs] = useState([]);
   const { user, isAuthenticated, logout, loginWithRedirect, getAccessTokenSilently } = useAuth0();
-  const domain = "dev-sb6ntunibpcdilyy.eu.auth0.com";
   const [category, setCategory] = useState([]);
   const limit =120;
+  
 
   const toastConfig = {
     position: toast.POSITION.TOP_CENTER,
@@ -45,11 +46,11 @@ function App() {
       });
     } 
   
-    fetch(`https://api.giphy.com/v1/gifs/search?api_key=dqLjAwvBVnjvUxGpqZWSkic6GlKXNFsw&q=${category}&limit=${limit}&offset=0&rating=g&lang=en`)
+    fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIPHI_API}&q=${category}&limit=${limit}&offset=0&rating=g&lang=en`)
       .then(response => response.json())
       .then(data => {
         const transformedData = transformApi(data.data);
-        console.log(transformedData) // Assuming data.data is the array
+        console.log(transformedData) 
         setGifs(transformedData);
       })
       .catch(error => console.error(error));
@@ -70,11 +71,11 @@ function App() {
       });
     } 
   
-    fetch(`https://api.giphy.com/v1/gifs/search?api_key=dqLjAwvBVnjvUxGpqZWSkic6GlKXNFsw&q=${category}&limit=${limit}&offset=0&rating=g&lang=en`)
+    fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIPHI_API}&q=${category}&limit=${limit}&offset=0&rating=g&lang=en`)
       .then(response => response.json())
       .then(data => {
         const transformedData = transformApi(data.data);
-        console.log(transformedData) // Assuming data.data is the array
+        console.log(transformedData) 
         setGifs(transformedData);
       })
       .catch(error => console.error(error));
@@ -86,7 +87,7 @@ function App() {
     try {
       const accessToken = await getAccessTokenSilently({
         authorizationParams: {
-          audience: `https://${domain}/api/v2/`,
+          audience: `https://${process.env.REACT_APP_DOMAIN}/api/v2/`,
           scope: "read:current_user",
         },
       });
@@ -95,7 +96,7 @@ function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
+          Authorization: `Bearer ${accessToken}`, 
         },
         body: JSON.stringify({
           email: email,
@@ -112,7 +113,6 @@ function App() {
     }
   }
 
-// HHHHHHHSHSHSHSHSHHSHSHSHSHSHHSHSHSHSHSHSHSHHSHSHSHHSHSHSHSHSHHSHSHS
 
 
   const uploadedGifs = async () => {
@@ -122,7 +122,7 @@ function App() {
     try {
       const accessToken = await getAccessTokenSilently({
         authorizationParams: {
-          audience: `https://${domain}/api/v2/`,
+          audience: `https://${process.env.REACT_APP_DOMAIN}/api/v2/`,
           scope: "read:current_user",
         },
       });
@@ -131,7 +131,7 @@ function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`, // Assuming the JWT is stored on the user object
+          Authorization: `Bearer ${accessToken}`, 
         },
         body: JSON.stringify({
           user: userName,
@@ -146,8 +146,6 @@ function App() {
     }
   }
 
-
-  // HHHHHHHSHSHSHSHSHHSHSHSHSHSHHSHSHSHSHSHSHSHHSHSHSHHSHSHSHSHSHHSHSHS
 
   return (
     <div className="bg-purple-200 text-black min-h-screen">
