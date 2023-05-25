@@ -36,7 +36,7 @@ function NavBar({ likedGifs, uploadedGifs, fetchCategories, fetchBar }) {
         },
       });
 
-      const response = await fetch(`${REACT_APP_BASE_URL}/users/upload`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/users/upload`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

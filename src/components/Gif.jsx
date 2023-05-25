@@ -54,7 +54,7 @@ function Gif({ gif }) {
                 
                 
                 
-                const response = await fetch(`${REACT_APP_BASE_URL}/users/upload`, {
+                const response = await fetch(`${process.env.REACT_APP_BASE_URL}/users/upload`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ function Gif({ gif }) {
                 const savedGif = await response.json(); 
                 const gifId = savedGif._id;
 
-                const responseLike = await fetch(`${REACT_APP_BASE_URL}/users/like`, {
+                const responseLike = await fetch(`${process.env.REACT_APP_BASE_URL}/users/like`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ function Gif({ gif }) {
                 
                 
                 
-                const response = await fetch(`${REACT_APP_BASE_URL}/users/like`, {
+                const response = await fetch(`${process.env.REACT_APP_BASE_URL}/users/like`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
