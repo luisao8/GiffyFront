@@ -16,7 +16,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function Gif({ gif }) {
 
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-    const domain = process.env.DOMAIN;
+    const domain = process.env.REACT_APP_DOMAIN;
 
     const shareGif = () => {
         navigator.clipboard.writeText(gif.urlLink).then(() => {
