@@ -14,15 +14,14 @@
 ---
 
 ## Project Description
-Welcome to Giffy, your personal GIF browser and library! This repository contains the codebase for a comprehensive webapp that allows users to navigate, like, and upload their favorite GIFs.
+Welcome to Giffy, your personal GIF browser and library! This repository contains the codebase for a comprehensive webapp that allows users to log in to their profile and navigate, like, and upload their favorite GIFs.
 
 ---
 
 ## Technologies
-This project is developed with the following technologies:
-* HTML
-* CSS
-* JavaScript
+This project was developed with the following technologies:
+* REACT
+* Bootstrap
 
 ---
 
@@ -41,10 +40,6 @@ Follow these steps to install the project:
 
 ---
 
-## Usage
-After cloning the repository, open the `index.html` file in your preferred web browser to start browsing, liking, and uploading GIFs on Giffy.
-
----
 
 ## Contributions
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](#).
@@ -54,7 +49,6 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ## Contact Information
 If you have any questions, issues or you need assistance, feel free to contact us at:
 
-* [Email](mailto:)
-* [Twitter](https://twitter.com/username)
-* [LinkedIn](https://www.linkedin.com/in/username)
+* [Email](mailto:luisalarconriva@gmail.com)
+* [LinkedIn]([https://www.linkedin.com/in/luis-alarc%C3%B3n-de-la-lastra-810113122/])
 
