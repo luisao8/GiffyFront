@@ -2,6 +2,15 @@
 
 ---
 
+![Example Search](https://github.com/luisao8/GiffyFront/blob/main/images/Example%20Search.png "Example Search")
+
+![Example](https://github.com/luisao8/GiffyFront/blob/main/images/Example.png "Welcome.png")
+
+![Gif](https://github.com/luisao8/GiffyFront/blob/main/images/gif.gif "gif.gif")
+
+
+---
+
 ## Table of Contents
 1. [Project Description](#project-description)
 2. [Technologies](#technologies)
@@ -14,7 +23,7 @@
 ---
 
 ## Project Description
-Welcome to Giffy, your personal GIF browser and library! This repository contains the codebase for a comprehensive webapp that allows users to log in to their profile and navigate, like, and upload their favorite GIFs. It was created for a three day challenge in my Software Development Masters.
+Welcome to Giffy, your personal GIF browser and library! This repository contains the codebase for a comprehensive webapp that allows users to log in to their profile and navigate, like, and upload their favorite GIFs.
 
 ---
 
