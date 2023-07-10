@@ -14,7 +14,7 @@
 ---
 
 ## Project Description
-Welcome to Giffy, your personal GIF browser and library! This repository contains the codebase for a comprehensive webapp that allows users to log in to their profile and navigate, like, and upload their favorite GIFs.
+Welcome to Giffy, your personal GIF browser and library! This repository contains the codebase for a comprehensive webapp that allows users to log in to their profile and navigate, like, and upload their favorite GIFs. It was created for a three day challenge in my Software Development Masters.
 
 ---
 
